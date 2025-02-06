@@ -6,12 +6,7 @@ import {
   fetchSevenTvChannelEmotes,
   fetchSevenTvGlobalEmotes,
 } from "../emote-providers/sevenTvProvider";
-
-type Emote = {
-  id: string;
-  code: string;
-  url: string;
-};
+import { Emote } from "../types";
 
 export default class EmoteParser {
   emotesMap = new Map<string, Emote>();
