@@ -1,11 +1,10 @@
 import {
   fetchBttvChannelEmotes,
   fetchBttvGlobalEmotes,
-  getBttvResourceUrl,
 } from "../emote-providers/bttvProvider";
 import {
+  fetchSevenTvChannelEmotes,
   fetchSevenTvGlobalEmotes,
-  getSevenTvResourceUrl,
 } from "../emote-providers/sevenTvProvider";
 
 type Emote = {
@@ -24,18 +23,27 @@ export default class EmoteParser {
    */
   async init() {
     const bttvGlobalEmotes = await fetchBttvGlobalEmotes().catch(() => []);
+
     const sevenTvGlobalEmotes = await fetchSevenTvGlobalEmotes().catch(
       () => []
     );
+
     const bttvChannelEmotes = await fetchBttvChannelEmotes(
       this.options?.channelId
     ).catch(() => []);
 
-    [...sevenTvGlobalEmotes, ...bttvGlobalEmotes, ...bttvChannelEmotes].forEach(
-      (emote) => {
-        this.emotesMap.set(emote.code, emote);
-      }
-    );
+    const sevenTvChannelEmotes = await fetchSevenTvChannelEmotes(
+      this.options?.channelId
+    ).catch(() => []);
+
+    [
+      ...sevenTvGlobalEmotes,
+      ...bttvGlobalEmotes,
+      ...sevenTvChannelEmotes,
+      ...bttvChannelEmotes,
+    ].forEach((emote) => {
+      this.emotesMap.set(emote.code, emote);
+    });
   }
 
   parse(message: string): string[] {

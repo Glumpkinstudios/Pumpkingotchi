@@ -21,6 +21,19 @@ export async function fetchSevenTvGlobalEmotes() {
     .then((obj) => obj.emotes.map(mapToUnifiedEmote));
 }
 
+export async function fetchSevenTvChannelEmotes(channelId?: string) {
+  if (!channelId) return [];
+
+  return fetch(`https://7tv.io/v3/users/twitch/${channelId}`)
+    .then(
+      (res) =>
+        res.json() as Promise<{
+          emotes: { data: { id: string; name: string } }[];
+        }>
+    )
+    .then((obj) => obj.emotes.map(mapToUnifiedEmote));
+}
+
 export function getSevenTvResourceUrl(id: string) {
   return `https://cdn.7tv.app/emote/${id}/1x.webp`;
 }
