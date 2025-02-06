@@ -20,6 +20,7 @@ const game = new Engine({
   maxFps: options.fps !== undefined ? Number.parseInt(options.fps) : 48,
   fixedUpdateFps:
     options.fixedFps !== undefined ? Number.parseInt(options.fixedFps) : 24,
+  canvasElementId: "game-canvas",
 });
 
 game

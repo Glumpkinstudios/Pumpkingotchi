@@ -23,11 +23,13 @@ export default class EmoteParser {
    * Loads BTTV and 7tv emotes from the API.
    */
   async init() {
-    const bttvGlobalEmotes = await fetchBttvGlobalEmotes();
-    const sevenTvGlobalEmotes = await fetchSevenTvGlobalEmotes();
+    const bttvGlobalEmotes = await fetchBttvGlobalEmotes().catch(() => []);
+    const sevenTvGlobalEmotes = await fetchSevenTvGlobalEmotes().catch(
+      () => []
+    );
     const bttvChannelEmotes = await fetchBttvChannelEmotes(
       this.options?.channelId
-    );
+    ).catch(() => []);
 
     [...sevenTvGlobalEmotes, ...bttvGlobalEmotes, ...bttvChannelEmotes].forEach(
       (emote) => {

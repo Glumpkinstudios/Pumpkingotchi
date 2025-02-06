@@ -1,3 +1,3 @@
 export function getTwitchResourceUrl(id: string) {
-  return `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/dark/2.0`;
+  return `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/dark/1.0`;
 }

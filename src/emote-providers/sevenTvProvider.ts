@@ -22,5 +22,5 @@ export async function fetchSevenTvGlobalEmotes() {
 }
 
 export function getSevenTvResourceUrl(id: string) {
-  return `https://cdn.7tv.app/emote/${id}/2x.webp`;
+  return `https://cdn.7tv.app/emote/${id}/1x.webp`;
 }

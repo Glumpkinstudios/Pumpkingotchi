@@ -26,5 +26,5 @@ export async function fetchBttvChannelEmotes(channelId?: string) {
 }
 
 export function getBttvResourceUrl(id: string) {
-  return `https://cdn.betterttv.net/emote/${id}/2x`;
+  return `https://cdn.betterttv.net/emote/${id}/1x`;
 }

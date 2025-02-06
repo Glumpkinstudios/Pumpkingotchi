@@ -5,8 +5,6 @@ export default class EmoteActor extends Actor {
 
   life = 4000;
   loadingTimeout = 4000;
-  resource: Gif | ImageSource | undefined;
-  isInit = false;
 
   constructor(source: Vector, private url: string, rand: Random) {
     super({
@@ -15,49 +13,31 @@ export default class EmoteActor extends Actor {
       vel: new Vector(rand.floating(-1, 1), rand.floating(-1, 0))
         .normalize()
         .scaleEqual(100),
-      scale: new Vector(0.5, 0.5),
     });
+  }
 
-    let emoteResource = EmoteActor.emoteCache.get(this.url);
-    if (!emoteResource) {
-      fetch(this.url)
-        .then((res) => res.bytes())
-        .then((blob) => {
-          const isGif =
-            Array.from(blob.slice(0, 3), (chara) =>
-              String.fromCharCode(chara)
-            ).join("") === "GIF";
+  imgEl: HTMLImageElement | undefined;
+  onInitialize(): void {
+    const img = document.createElement("img");
+    img.style.position = "absolute";
+    img.style.top = "0";
+    img.style.left = "0";
+    img.style.transform = `translate(${this.pos.x - 14}px, ${
+      this.pos.y - 14
+    }px)`;
+    img.src = this.url;
+    document.getElementById("game-root")?.append(img);
 
-          const base64 = btoa(
-            Array.from(blob.values(), (x) => String.fromCharCode(x)).join("")
-          );
-
-          emoteResource = isGif
-            ? new Gif("data:image/gif;base64," + base64)
-            : new ImageSource("data:image/png;base64," + base64);
-
-          EmoteActor.emoteCache.set(this.url, emoteResource);
-          emoteResource.load();
-          this.resource = emoteResource;
-        });
-    }
+    img.onload = () => {
+      this.imgEl = img;
+    };
   }
 
   update(engine: Engine, elapsed: number): void {
     super.update(engine, elapsed);
-
-    if (this.resource && this.resource.isLoaded() && !this.isInit) {
-      this.graphics.use(
-        this.resource instanceof Gif
-          ? this.resource.toAnimation()!
-          : this.resource.toSprite()
-      );
-      this.isInit = true;
-    }
-
     // prevent the life timer from starting until the resource loads
     // if the resource does not load within loadingTimeout, the actor will be killed
-    if (!this.isInit) {
+    if (!this.imgEl) {
       this.loadingTimeout -= elapsed;
       if (this.loadingTimeout <= 0) {
         this.kill();
@@ -65,12 +45,19 @@ export default class EmoteActor extends Actor {
       return;
     }
 
-    this.life -= elapsed;
+    this.imgEl.style.transform = `translate(${this.pos.x - 14}px, ${
+      this.pos.y - 14
+    }px)`;
+    this.imgEl.style.opacity = (this.life / 4000).toFixed(2).toString();
 
-    this.graphics.opacity = this.life / 4000;
+    this.life -= elapsed;
 
     if (this.life <= 0) {
       this.kill();
     }
+  }
+
+  onPostKill(): void {
+    this.imgEl?.remove();
   }
 }
