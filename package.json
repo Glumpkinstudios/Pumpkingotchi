@@ -1,7 +1,7 @@
 {
   "license": "UNLICENSED",
   "scripts": {
-    "start": "parcel src/*.html --no-autoinstall",
+    "start": "parcel src/*.html --no-autoinstall --lazy",
     "build": "rimraf dist && parcel build src/*.html --public-url ./",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",

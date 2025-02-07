@@ -3,7 +3,6 @@ import {
   ActorArgs,
   Circle,
   clamp,
-  Collider,
   CollisionGroup,
   CollisionType,
   Color,
@@ -23,16 +22,14 @@ function randBetween(min: number, max: number) {
 }
 
 export default class PumpkinActor extends Actor {
-  skinChance = 0.1;
+  static radius = 16;
 
-  minWalkRadius = 15;
-  maxWalkRadius = 50;
-  walkSpeed = 0.1;
+  private minWalkRadius = 15;
+  private maxWalkRadius = 50;
+  private walkSpeed = 0.1;
 
-  minIdleTime = 1000;
-  maxIdleTime = 10000;
-
-  collidingWith: Collider[] = [];
+  private minIdleTime = 1000;
+  private maxIdleTime = 10000;
 
   state:
     | {
@@ -48,14 +45,20 @@ export default class PumpkinActor extends Actor {
     for: 0,
   };
 
-  idleAnimation: Graphic = new Circle({ radius: 16, color: Color.Orange });
-  walkAnimation: Graphic = new Circle({ radius: 16, color: Color.Orange });
+  idleAnimation: Graphic = new Circle({
+    radius: PumpkinActor.radius,
+    color: Color.Orange,
+  });
+  walkAnimation: Graphic = new Circle({
+    radius: PumpkinActor.radius,
+    color: Color.Orange,
+  });
   chatterName: string;
 
   constructor(config: ActorArgs & { chatterName: string }) {
     const newConfig = Object.assign(
       {
-        radius: 16,
+        radius: PumpkinActor.radius,
         collisionType: CollisionType.Active,
         collisionGroup: CollisionGroup.All,
       },
@@ -72,11 +75,11 @@ export default class PumpkinActor extends Actor {
 
     this.idleAnimation =
       skin.getAnimation('idle') ??
-      new Circle({ radius: 16, color: Color.Orange });
+      new Circle({ radius: PumpkinActor.radius, color: Color.Orange });
 
     this.walkAnimation =
       skin.getAnimation('walk') ??
-      new Circle({ radius: 16, color: Color.Orange });
+      new Circle({ radius: PumpkinActor.radius, color: Color.Orange });
   }
 
   public sendBangMessage(bang: string, bangArgs: string | undefined) {
@@ -96,12 +99,22 @@ export default class PumpkinActor extends Actor {
     const label = new Label({
       text: this.chatterName,
       font: new Font({
-        size: 10,
+        size: 14,
         color: Color.White,
+        strokeColor: Color.Black,
+        bold: true,
+        shadow: {
+          color: Color.Black,
+          blur: 8,
+        },
+
+        lineCap: 'round',
+        lineWidth: 0.2,
       }),
       pos: new Vector(0, -18),
     });
     label.anchor = new Vector(0.5, 0.5);
+    label.z = 2;
     this.addChild(label);
   }
 
@@ -167,13 +180,21 @@ export default class PumpkinActor extends Actor {
 
     // if we left the map then move back and set state to idle
     if (
-      this.pos.x < 0 ||
-      this.pos.x > engine.drawWidth ||
-      this.pos.y < 0 ||
-      this.pos.y > engine.drawHeight
+      this.pos.x < PumpkinActor.radius * 2 ||
+      this.pos.x > engine.drawWidth - PumpkinActor.radius * 2 ||
+      this.pos.y < PumpkinActor.radius * 2 ||
+      this.pos.y > engine.drawHeight - PumpkinActor.radius * 2
     ) {
-      this.pos.x = clamp(this.pos.x, 0, engine.drawWidth);
-      this.pos.y = clamp(this.pos.y, 0, engine.drawHeight);
+      this.pos.x = clamp(
+        this.pos.x,
+        PumpkinActor.radius * 2,
+        engine.drawWidth - PumpkinActor.radius * 2
+      );
+      this.pos.y = clamp(
+        this.pos.y,
+        PumpkinActor.radius * 2,
+        engine.drawHeight - PumpkinActor.radius * 2
+      );
 
       this.setIdle();
       return;

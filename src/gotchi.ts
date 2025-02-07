@@ -15,6 +15,7 @@ const game = new Engine({
     main: new MainScene({
       channel: options.channel,
       blackList: options.blackList?.split(','),
+      transparent: !!options.transparent,
     }),
   },
   maxFps: options.fps !== undefined ? Number.parseInt(options.fps) : 48,
@@ -23,13 +24,19 @@ const game = new Engine({
   canvasElementId: 'game-canvas',
 });
 
+if (!options.transparent) {
+  document.body.style.backgroundColor = 'black';
+}
+
 game
   .start('main', {
     loader,
-    inTransition: new FadeInOut({
-      duration: 1000,
-      direction: 'in',
-      color: Color.Black,
-    }),
+    inTransition: options.transparent
+      ? undefined
+      : new FadeInOut({
+          duration: 1000,
+          direction: 'in',
+          color: Color.Black,
+        }),
   })
   .then(() => {});

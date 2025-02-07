@@ -5,17 +5,20 @@ import ChatHandler from '../utils/chat-handler';
 import EmoteActor from './emote-actor';
 
 export class MainScene extends Scene {
-  backgroundColor = Color.DarkGray;
+  backgroundColor = Color.Transparent;
   activeChatters = new Map<string, PumpkinActor>();
   rand = new Random();
 
   chatHandler: ChatHandler;
   blackList: string[];
 
-  constructor(options: {
-    channel?: string | null;
-    blackList?: string[] | null;
-  }) {
+  constructor(
+    private options: {
+      channel?: string | null;
+      blackList?: string[] | null;
+      transparent?: boolean;
+    }
+  ) {
     super();
     this.chatHandler = new ChatHandler(options.channel ?? 'ItsMerume');
     this.blackList = ['StreamElements', ...(options.blackList ?? [])].map(
@@ -24,17 +27,28 @@ export class MainScene extends Scene {
   }
 
   onInitialize(): void {
-    const background = new Actor();
-    background.graphics.use(Resources.backgroundTexture.toSprite());
-    background.anchor = new Vector(0, 0);
-    background.z = -1;
-    background.scale = new Vector(2, 2);
-    this.add(background);
+    if (!this.options.transparent) {
+      const background = new Actor();
+      background.graphics.use(Resources.backgroundTexture.toSprite());
+      background.anchor = new Vector(0, 0);
+      background.z = -1;
+      background.scale = new Vector(2, 2);
+      this.add(background);
+    }
 
     if (process.env.DEBUG) {
       for (let i = 0; i < 10; i++) {
         const pumpkin = new PumpkinActor({
-          pos: new Vector(Math.random() * 512, Math.random() * 512),
+          pos: new Vector(
+            this.rand.floating(
+              PumpkinActor.radius * 2,
+              512 - PumpkinActor.radius * 2
+            ),
+            this.rand.floating(
+              PumpkinActor.radius * 2,
+              512 - PumpkinActor.radius * 2
+            )
+          ),
           chatterName: `Chatter ${i}`,
         });
         this.add(pumpkin);
@@ -55,7 +69,16 @@ export class MainScene extends Scene {
       let activeChatterOpt = this.activeChatters.get(user.toUpperCase());
       if (!activeChatterOpt) {
         const pumpkin = new PumpkinActor({
-          pos: new Vector(Math.random() * 512, Math.random() * 512),
+          pos: new Vector(
+            this.rand.floating(
+              PumpkinActor.radius * 2,
+              512 - PumpkinActor.radius * 2
+            ),
+            this.rand.floating(
+              PumpkinActor.radius * 2,
+              512 - PumpkinActor.radius * 2
+            )
+          ),
           chatterName: user,
         });
         this.add(pumpkin);
