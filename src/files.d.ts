@@ -1,24 +1,24 @@
-declare module "*.jpg" {
+declare module '*.jpg' {
   const val: string;
   export default val;
 }
 
-declare module "*.bmp" {
+declare module '*.bmp' {
   const val: string;
   export default val;
 }
 
-declare module "*.png" {
+declare module '*.png' {
   const val: string;
   export default val;
 }
 
-declare module "*.tmx" {
+declare module '*.tmx' {
   const val: string;
   export default val;
 }
 
-declare module "*.aseprite" {
+declare module '*.aseprite' {
   const val: string;
   export default val;
 }

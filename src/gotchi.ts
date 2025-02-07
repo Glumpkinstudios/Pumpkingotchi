@@ -1,6 +1,6 @@
-import { Color, DisplayMode, Engine, FadeInOut } from "excalibur";
-import { MainScene } from "./game/scene";
-import { loader } from "./game/resources";
+import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
+import { MainScene } from './game/scene';
+import { loader } from './game/resources';
 
 const options: Record<string, string | undefined> = Object.fromEntries(
   new URLSearchParams(window.location.search)
@@ -14,21 +14,21 @@ const game = new Engine({
   scenes: {
     main: new MainScene({
       channel: options.channel,
-      blackList: options.blackList?.split(","),
+      blackList: options.blackList?.split(','),
     }),
   },
   maxFps: options.fps !== undefined ? Number.parseInt(options.fps) : 48,
   fixedUpdateFps:
     options.fixedFps !== undefined ? Number.parseInt(options.fixedFps) : 24,
-  canvasElementId: "game-canvas",
+  canvasElementId: 'game-canvas',
 });
 
 game
-  .start("main", {
+  .start('main', {
     loader,
     inTransition: new FadeInOut({
       duration: 1000,
-      direction: "in",
+      direction: 'in',
       color: Color.Black,
     }),
   })

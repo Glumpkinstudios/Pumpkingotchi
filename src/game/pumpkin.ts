@@ -13,8 +13,8 @@ import {
   Label,
   Random,
   Vector,
-} from "excalibur";
-import getPumpkinSkin from "./skin-picker";
+} from 'excalibur';
+import getPumpkinSkin from './skin-picker';
 
 const rand = new Random();
 
@@ -36,15 +36,15 @@ export default class PumpkinActor extends Actor {
 
   state:
     | {
-        type: "walk";
+        type: 'walk';
         to: Vector;
         for: number;
       }
     | {
-        type: "idle";
+        type: 'idle';
         for: number;
       } = {
-    type: "idle",
+    type: 'idle',
     for: 0,
   };
 
@@ -71,16 +71,16 @@ export default class PumpkinActor extends Actor {
     const skin = getPumpkinSkin(this.chatterName, rand, skipDefaultSkin);
 
     this.idleAnimation =
-      skin.getAnimation("idle") ??
+      skin.getAnimation('idle') ??
       new Circle({ radius: 16, color: Color.Orange });
 
     this.walkAnimation =
-      skin.getAnimation("walk") ??
+      skin.getAnimation('walk') ??
       new Circle({ radius: 16, color: Color.Orange });
   }
 
   public sendBangMessage(bang: string, bangArgs: string | undefined) {
-    if (bang === "gotchi" && bangArgs === "roll") {
+    if (bang === 'gotchi' && bangArgs === 'roll') {
       this.ininSkin(true);
       this.setIdle();
     }
@@ -107,7 +107,7 @@ export default class PumpkinActor extends Actor {
 
   private setIdle() {
     this.state = {
-      type: "idle",
+      type: 'idle',
       for: randBetween(this.minIdleTime, this.maxIdleTime),
     };
 
@@ -119,7 +119,7 @@ export default class PumpkinActor extends Actor {
     this.graphics.flipHorizontal = movement.x >= 0;
 
     this.state = {
-      type: "walk",
+      type: 'walk',
       to: this.pos.add(movement),
       for: 5000,
     };
@@ -144,7 +144,7 @@ export default class PumpkinActor extends Actor {
   }
 
   private handleWalk(
-    state: Extract<typeof this.state, { type: "walk" }>,
+    state: Extract<typeof this.state, { type: 'walk' }>,
     engine: Engine,
     elapsed: number
   ) {
@@ -190,14 +190,14 @@ export default class PumpkinActor extends Actor {
     super.update(engine, elapsed);
 
     switch (this.state.type) {
-      case "idle":
+      case 'idle':
         this.handleIdle(engine, elapsed);
         break;
-      case "walk":
+      case 'walk':
         this.handleWalk(this.state, engine, elapsed);
         break;
       default:
-        throw new Error("Invalid state");
+        throw new Error('Invalid state');
     }
   }
 }

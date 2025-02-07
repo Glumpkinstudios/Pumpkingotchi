@@ -1,4 +1,4 @@
-import { Emote } from "../types";
+import { Emote } from '../types';
 
 function mapToUnifiedEmote(emote: {
   data: { id: string; name: string };
@@ -11,7 +11,7 @@ function mapToUnifiedEmote(emote: {
 }
 
 export async function fetchSevenTvGlobalEmotes() {
-  return fetch("https://7tv.io/v3/emote-sets/global")
+  return fetch('https://7tv.io/v3/emote-sets/global')
     .then(
       (res) =>
         res.json() as Promise<{

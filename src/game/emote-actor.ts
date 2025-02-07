@@ -1,4 +1,4 @@
-import { Actor, Engine, Gif, ImageSource, Random, Vector } from "excalibur";
+import { Actor, Engine, Gif, ImageSource, Random, Vector } from 'excalibur';
 
 export default class EmoteActor extends Actor {
   static emoteCache = new Map<string, Gif | ImageSource>();
@@ -6,7 +6,11 @@ export default class EmoteActor extends Actor {
   life = 4000;
   loadingTimeout = 4000;
 
-  constructor(source: Vector, private url: string, rand: Random) {
+  constructor(
+    source: Vector,
+    private url: string,
+    rand: Random
+  ) {
     super({
       pos: source,
       acc: new Vector(0, 100),
@@ -18,15 +22,15 @@ export default class EmoteActor extends Actor {
 
   imgEl: HTMLImageElement | undefined;
   onInitialize(): void {
-    const img = document.createElement("img");
-    img.style.position = "absolute";
-    img.style.top = "0";
-    img.style.left = "0";
+    const img = document.createElement('img');
+    img.style.position = 'absolute';
+    img.style.top = '0';
+    img.style.left = '0';
     img.style.transform = `translate(${this.pos.x - 14}px, ${
       this.pos.y - 14
     }px)`;
     img.src = this.url;
-    document.getElementById("game-root")?.append(img);
+    document.getElementById('game-root')?.append(img);
 
     img.onload = () => {
       this.imgEl = img;

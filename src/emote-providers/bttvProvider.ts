@@ -1,4 +1,4 @@
-import { Emote } from "../types";
+import { Emote } from '../types';
 
 function mapToUnifiedEmote(emote: { id: string; code: string }): Emote {
   return {
@@ -9,7 +9,7 @@ function mapToUnifiedEmote(emote: { id: string; code: string }): Emote {
 }
 
 export async function fetchBttvGlobalEmotes() {
-  return fetch("https://api.betterttv.net/3/cached/emotes/global")
+  return fetch('https://api.betterttv.net/3/cached/emotes/global')
     .then((res) => res.json() as Promise<{ id: string; code: string }[]>)
     .then((emotes) => emotes.map(mapToUnifiedEmote));
 }

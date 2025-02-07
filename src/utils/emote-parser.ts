@@ -1,12 +1,12 @@
 import {
   fetchBttvChannelEmotes,
   fetchBttvGlobalEmotes,
-} from "../emote-providers/bttvProvider";
+} from '../emote-providers/bttvProvider';
 import {
   fetchSevenTvChannelEmotes,
   fetchSevenTvGlobalEmotes,
-} from "../emote-providers/sevenTvProvider";
-import { Emote } from "../types";
+} from '../emote-providers/sevenTvProvider';
+import { Emote } from '../types';
 
 export default class EmoteParser {
   emotesMap = new Map<string, Emote>();
@@ -43,7 +43,7 @@ export default class EmoteParser {
 
   parse(message: string): string[] {
     return message
-      .split(" ")
+      .split(' ')
       .map((word) => {
         const emote = this.emotesMap.get(word.trim());
         return emote?.url;

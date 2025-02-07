@@ -1,8 +1,8 @@
-import { Actor, Color, Random, Scene, Vector } from "excalibur";
-import { Resources } from "./resources";
-import PumpkinActor from "./pumpkin";
-import ChatHandler from "../utils/chat-handler";
-import EmoteActor from "./emote-actor";
+import { Actor, Color, Random, Scene, Vector } from 'excalibur';
+import { Resources } from './resources';
+import PumpkinActor from './pumpkin';
+import ChatHandler from '../utils/chat-handler';
+import EmoteActor from './emote-actor';
 
 export class MainScene extends Scene {
   backgroundColor = Color.DarkGray;
@@ -17,8 +17,8 @@ export class MainScene extends Scene {
     blackList?: string[] | null;
   }) {
     super();
-    this.chatHandler = new ChatHandler(options.channel ?? "ItsMerume");
-    this.blackList = ["StreamElements", ...(options.blackList ?? [])].map(
+    this.chatHandler = new ChatHandler(options.channel ?? 'ItsMerume');
+    this.blackList = ['StreamElements', ...(options.blackList ?? [])].map(
       (el) => el.toUpperCase()
     );
   }

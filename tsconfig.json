@@ -4,9 +4,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "typeRoots": [
-      "./src/files.d.ts",
-      "./node_modules/@types"
-    ]
-  }
+    "typeRoots": ["./src/files.d.ts", "./node_modules/@types"]
+  },
+  "exclude": ["node_modules"]
 }

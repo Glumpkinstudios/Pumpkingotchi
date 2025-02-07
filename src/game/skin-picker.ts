@@ -1,6 +1,6 @@
-import { Random } from "excalibur";
-import { Resources } from "./resources";
-import { CaseInsensitiveMap } from "../utils/generic";
+import { Random } from 'excalibur';
+import { Resources } from './resources';
+import { CaseInsensitiveMap } from '../utils/generic';
 
 export default function getPumpkinSkin(
   username: string,
@@ -38,10 +38,10 @@ export default function getPumpkinSkin(
 
   // hardcoded map of default skins for specific users
   const userSkins = new CaseInsensitiveMap([
-    ["angypeachy", Resources.pumpkinPemch],
-    ["Zerfaru", Resources.pumpkinZerfaru],
-    ["ItsSystem32", Resources.pumpkinSystem32],
-    ["The_Mazor", Resources.pumpkinCook],
+    ['angypeachy', Resources.pumpkinPemch],
+    ['Zerfaru', Resources.pumpkinZerfaru],
+    ['ItsSystem32', Resources.pumpkinSystem32],
+    ['The_Mazor', Resources.pumpkinCook],
   ]);
 
   const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;
@@ -68,6 +68,6 @@ export default function getPumpkinSkin(
   }
 
   // if we get here, something went wrong
-  console.error("Failed to pick a pumpkin skin");
+  console.error('Failed to pick a pumpkin skin');
   return Resources.pumpkin;
 }

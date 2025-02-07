@@ -1,24 +1,31 @@
 {
-	"license": "UNLICENSED",
-	"scripts": {
-		"start": "parcel src/*.html --no-autoinstall",
-		"build": "rimraf dist && parcel build src/*.html --public-url ./",
-		"predeploy": "pnpm run build",
-		"deploy": "gh-pages -d dist"
-	},
-	"packageManager": "pnpm@9.13.2+sha1.969cc200a41db98449afee1bfa7578b3ce6ff330",
-	"dependencies": {
-		"@excaliburjs/plugin-aseprite": "^0.30.2",
-		"comfy.js": "^1.1.24",
-		"excalibur": "^0.30.3"
-	},
-	"devDependencies": {
-		"@parcel/config-default": "^2.13.3",
-		"@parcel/transformer-raw": "^2.13.3",
-		"@types/node": "^22.13.1",
-		"@types/tmi.js": "^1.8.6",
-		"gh-pages": "^6.3.0",
-		"parcel": "^2.13.3",
-		"rimraf": "^6.0.1"
-	}
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "parcel src/*.html --no-autoinstall",
+    "build": "rimraf dist && parcel build src/*.html --public-url ./",
+    "predeploy": "pnpm run build",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint src/**/*.ts --fix",
+    "format": "prettier --write ./**/*.{json,html,ts}"
+  },
+  "packageManager": "pnpm@9.13.2+sha1.969cc200a41db98449afee1bfa7578b3ce6ff330",
+  "dependencies": {
+    "@excaliburjs/plugin-aseprite": "^0.30.2",
+    "comfy.js": "^1.1.24",
+    "excalibur": "^0.30.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@parcel/config-default": "^2.13.3",
+    "@parcel/transformer-raw": "^2.13.3",
+    "@types/node": "^22.13.1",
+    "@types/tmi.js": "^1.8.6",
+    "eslint": "^9.19.0",
+    "gh-pages": "^6.3.0",
+    "globals": "^15.14.0",
+    "parcel": "^2.13.3",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "typescript-eslint": "^8.23.0"
+  }
 }

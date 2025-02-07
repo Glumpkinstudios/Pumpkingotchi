@@ -1,6 +1,6 @@
-import ComfyJS from "comfy.js";
-import EmoteParser from "./emote-parser";
-import { getTwitchResourceUrl } from "../emote-providers/twitchProvider";
+import ComfyJS from 'comfy.js';
+import EmoteParser from './emote-parser';
+import { getTwitchResourceUrl } from '../emote-providers/twitchProvider';
 
 type ChatHandlerListener = (
   user: string,
@@ -13,16 +13,16 @@ export default class ChatHandler {
 
   private async init(channelNames: string[]) {
     ComfyJS.Init(
-      "",
+      '',
       undefined,
-      typeof channelNames === "string" ? [channelNames] : channelNames,
+      typeof channelNames === 'string' ? [channelNames] : channelNames,
       true
     );
 
     // add the roomstate listener as soon as possible after the ComfyJS.Init()
     const roomId = await new Promise<string | undefined>((resolve) => {
-      ComfyJS.GetClient().on("roomstate", (_channel, state) => {
-        resolve(state["room-id"]);
+      ComfyJS.GetClient().on('roomstate', (_channel, state) => {
+        resolve(state['room-id']);
       });
     });
 
@@ -62,7 +62,7 @@ export default class ChatHandler {
     channelNames: string | string[],
     private options: { subOnly?: boolean } = {}
   ) {
-    this.init(typeof channelNames === "string" ? [channelNames] : channelNames);
+    this.init(typeof channelNames === 'string' ? [channelNames] : channelNames);
   }
 
   public addListener(listener: ChatHandlerListener) {
