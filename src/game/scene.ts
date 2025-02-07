@@ -1,7 +1,7 @@
 import { Actor, Color, Random, Scene, Vector } from "excalibur";
 import { Resources } from "./resources";
 import PumpkinActor from "./pumpkin";
-import ChatHandler from "../services/chat-handler";
+import ChatHandler from "../utils/chat-handler";
 import EmoteActor from "./emote-actor";
 
 export class MainScene extends Scene {

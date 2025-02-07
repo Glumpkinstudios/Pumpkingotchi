@@ -7,15 +7,14 @@ import {
   CollisionGroup,
   CollisionType,
   Color,
-  EmitterType,
   Engine,
   Font,
+  Graphic,
   Label,
-  ParticleEmitter,
   Random,
   Vector,
 } from "excalibur";
-import { Resources } from "./resources";
+import getPumpkinSkin from "./skin-picker";
 
 const rand = new Random();
 
@@ -24,12 +23,7 @@ function randBetween(min: number, max: number) {
 }
 
 export default class PumpkinActor extends Actor {
-  walkAnimation =
-    Resources.pumpkinAseprite.getAnimation("walk") ??
-    new Circle({ radius: 16, color: Color.Orange });
-  idleAnimation =
-    Resources.pumpkinAseprite.getAnimation("idle") ??
-    new Circle({ radius: 16, color: Color.Orange });
+  skinChance = 0.1;
 
   minWalkRadius = 15;
   maxWalkRadius = 50;
@@ -53,6 +47,9 @@ export default class PumpkinActor extends Actor {
     type: "idle",
     for: 0,
   };
+
+  idleAnimation: Graphic;
+  walkAnimation: Graphic;
   chatterName: string;
 
   constructor(config: ActorArgs & { chatterName: string }) {
@@ -66,6 +63,16 @@ export default class PumpkinActor extends Actor {
     );
     super(newConfig);
     this.chatterName = config.chatterName;
+
+    const skin = getPumpkinSkin(this.chatterName, rand);
+
+    this.idleAnimation =
+      skin.getAnimation("idle") ??
+      new Circle({ radius: 16, color: Color.Orange });
+
+    this.walkAnimation =
+      skin.getAnimation("walk") ??
+      new Circle({ radius: 16, color: Color.Orange });
   }
 
   override onInitialize(engine: Engine): void {
