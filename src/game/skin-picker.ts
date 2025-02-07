@@ -2,7 +2,11 @@ import { Random } from "excalibur";
 import { Resources } from "./resources";
 import { compareStringsCaseInsensitive } from "../utils/generic";
 
-export default function getPumpkinSkin(username: string, rand = new Random()) {
+export default function getPumpkinSkin(
+  username: string,
+  rand = new Random(),
+  skipDefaultSkin = false
+) {
   const skinChance = 0.2;
   const skinWeights = [
     {
@@ -50,7 +54,7 @@ export default function getPumpkinSkin(username: string, rand = new Random()) {
   }
 
   // if the skinchance roll fails, return the default pumpkin skin
-  if (rand.floating(0, 1) > skinChance) {
+  if (!skipDefaultSkin && rand.floating(0, 1) > skinChance) {
     return Resources.pumpkin;
   }
 

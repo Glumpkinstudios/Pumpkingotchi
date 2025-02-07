@@ -2,7 +2,11 @@ import ComfyJS from "comfy.js";
 import EmoteParser from "./emote-parser";
 import { getTwitchResourceUrl } from "../emote-providers/twitchProvider";
 
-type ChatHandlerListener = (user: string, emotesUrls: string[]) => void;
+type ChatHandlerListener = (
+  user: string,
+  bangMessage: [string, string | undefined] | undefined,
+  emotesUrls: string[]
+) => void;
 
 export default class ChatHandler {
   private listeners: ChatHandlerListener[] = [];
@@ -25,6 +29,16 @@ export default class ChatHandler {
     const emoteParser = new EmoteParser({ channelId: roomId });
     await emoteParser.init();
 
+    ComfyJS.onCommand = (user, command, message, flags) => {
+      if (this.options.subOnly && !flags.subscriber) {
+        return;
+      }
+
+      this.listeners.forEach((listener) => {
+        listener(user, [command, message], []);
+      });
+    };
+
     ComfyJS.onChat = async (user, message, flags, _self, extra) => {
       if (this.options.subOnly && !flags.subscriber) {
         return;
@@ -39,7 +53,7 @@ export default class ChatHandler {
       const externalEmoteUrls = emoteParser.parse(message);
 
       this.listeners.forEach((listener) => {
-        listener(user, [...twitchEmoteUrls, ...externalEmoteUrls]);
+        listener(user, undefined, [...twitchEmoteUrls, ...externalEmoteUrls]);
       });
     };
   }

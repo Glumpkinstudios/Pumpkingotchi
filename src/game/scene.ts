@@ -6,7 +6,7 @@ import EmoteActor from "./emote-actor";
 
 export class MainScene extends Scene {
   backgroundColor = Color.DarkGray;
-  activeChatters = new Map<string, Actor>();
+  activeChatters = new Map<string, PumpkinActor>();
   rand = new Random();
 
   chatHandler: ChatHandler;
@@ -47,7 +47,7 @@ export class MainScene extends Scene {
     // TODO: remove unactive chatters
     // TODO: remove chatters as they go offline
     // TODO: limit the amount of chatters
-    this.chatHandler.addListener((user, emotesUrls) => {
+    this.chatHandler.addListener((user, bangMessage, emotesUrls) => {
       if (this.blackList.includes(user.toUpperCase())) {
         return;
       }
@@ -63,7 +63,9 @@ export class MainScene extends Scene {
         activeChatterOpt = pumpkin;
       }
 
-      if (!activeChatterOpt) return;
+      if (bangMessage) {
+        activeChatterOpt.sendBangMessage(bangMessage[0], bangMessage[1]);
+      }
 
       emotesUrls.slice(0, 5).forEach((emoteUrl) => {
         this.add(

@@ -48,8 +48,8 @@ export default class PumpkinActor extends Actor {
     for: 0,
   };
 
-  idleAnimation: Graphic;
-  walkAnimation: Graphic;
+  idleAnimation: Graphic = new Circle({ radius: 16, color: Color.Orange });
+  walkAnimation: Graphic = new Circle({ radius: 16, color: Color.Orange });
   chatterName: string;
 
   constructor(config: ActorArgs & { chatterName: string }) {
@@ -64,7 +64,11 @@ export default class PumpkinActor extends Actor {
     super(newConfig);
     this.chatterName = config.chatterName;
 
-    const skin = getPumpkinSkin(this.chatterName, rand);
+    this.ininSkin();
+  }
+
+  private ininSkin(skipDefaultSkin = false) {
+    const skin = getPumpkinSkin(this.chatterName, rand, skipDefaultSkin);
 
     this.idleAnimation =
       skin.getAnimation("idle") ??
@@ -73,6 +77,13 @@ export default class PumpkinActor extends Actor {
     this.walkAnimation =
       skin.getAnimation("walk") ??
       new Circle({ radius: 16, color: Color.Orange });
+  }
+
+  public sendBangMessage(bang: string, bangArgs: string | undefined) {
+    if (bang === "gotchi" && bangArgs === "roll") {
+      this.ininSkin(true);
+      this.setIdle();
+    }
   }
 
   override onInitialize(engine: Engine): void {
