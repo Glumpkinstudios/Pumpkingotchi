@@ -19,6 +19,12 @@ export default function getPumpkinSkin(
       res: Resources.pumpkinNerd,
     },
     {
+      res: Resources.pumpkinDaisy,
+    },
+    {
+      res: Resources.pumpkinPiphat,
+    },
+    {
       res: Resources.pumpkinCook,
       weight: 0.2,
     },
