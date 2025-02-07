@@ -27,7 +27,7 @@ export default function getPumpkinSkin(
       weight: 0.1,
     },
     {
-      res: Resources.pumpkinZefaru,
+      res: Resources.pumpkinZerfaru,
       weight: 0.1,
     },
     {
@@ -39,7 +39,7 @@ export default function getPumpkinSkin(
   // hardcoded map of default skins for specific users
   const userSkins = new CaseInsensitiveMap([
     ["angypeachy", Resources.pumpkinPemch],
-    ["Zefaru", Resources.pumpkinZefaru],
+    ["Zerfaru", Resources.pumpkinZerfaru],
     ["ItsSystem32", Resources.pumpkinSystem32],
     ["The_Mazor", Resources.pumpkinCook],
   ]);

@@ -9,7 +9,7 @@ import pumpkinBeardSkinSrc from "../assets/skins/running_pumpkin_beard_32.asepri
 import pumpkinCookSkinSrc from "../assets/skins/running_pumpkin_cook_32.aseprite";
 import pumpkinNerdSkinSrc from "../assets/skins/running_pumpkin_nerd_32.aseprite";
 import pumpkinSystem32SkinSrc from "../assets/skins/running_pumpkin_system32_32.aseprite";
-import pumpkinZefaruSkinSrc from "../assets/skins/running_pumpkin_zefaru_32.aseprite";
+import pumpkinZerfaruSkinSrc from "../assets/skins/running_pumpkin_zerfaru_32.aseprite";
 import pumpkinCatSkinSrc from "../assets/skins/running_pumpkin_cat_32.aseprite";
 
 export const Resources = {
@@ -20,7 +20,7 @@ export const Resources = {
   pumpkinCook: new AsepriteResource(pumpkinCookSkinSrc),
   pumpkinNerd: new AsepriteResource(pumpkinNerdSkinSrc),
   pumpkinSystem32: new AsepriteResource(pumpkinSystem32SkinSrc),
-  pumpkinZefaru: new AsepriteResource(pumpkinZefaruSkinSrc),
+  pumpkinZerfaru: new AsepriteResource(pumpkinZerfaruSkinSrc),
   pumpkinCat: new AsepriteResource(pumpkinCatSkinSrc),
 } as const satisfies Record<string, Loadable<unknown>>;
 
