@@ -1,6 +1,6 @@
 import { Random } from "excalibur";
 import { Resources } from "./resources";
-import { compareStringsCaseInsensitive } from "../utils/generic";
+import { CaseInsensitiveMap } from "../utils/generic";
 
 export default function getPumpkinSkin(
   username: string,
@@ -36,26 +36,22 @@ export default function getPumpkinSkin(
     },
   ];
 
-  // first check if user is in the hardcoded list of usernames
-  if (compareStringsCaseInsensitive(username, "angypeachy")) {
-    return Resources.pumpkinPemch;
-  }
+  // hardcoded map of default skins for specific users
+  const userSkins = new CaseInsensitiveMap([
+    ["angypeachy", Resources.pumpkinPemch],
+    ["Zefaru", Resources.pumpkinZefaru],
+    ["ItsSystem32", Resources.pumpkinSystem32],
+    ["The_Mazor", Resources.pumpkinCook],
+  ]);
 
-  if (compareStringsCaseInsensitive(username, "Zefaru")) {
-    return Resources.pumpkinZefaru;
-  }
+  const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;
+  const useDefaultSkin =
+    !skipDefaultSkin &&
+    (userSkins.has(username) || rand.floating(0, 1) > skinChance);
 
-  if (compareStringsCaseInsensitive(username, "ItsSystem32")) {
-    return Resources.pumpkinSystem32;
-  }
-
-  if (compareStringsCaseInsensitive(username, "The_Mazor")) {
-    return Resources.pumpkinCook;
-  }
-
-  // if the skinchance roll fails, return the default pumpkin skin
-  if (!skipDefaultSkin && rand.floating(0, 1) > skinChance) {
-    return Resources.pumpkin;
+  // if the skinchance roll fails, return the default skin
+  if (useDefaultSkin) {
+    return defaultSkin;
   }
 
   // pick a random pumpkin skin using skinWeights
