@@ -7,6 +7,10 @@ export class CaseInsensitiveMap<V> extends Map<string, V> {
     return super.set(key.toUpperCase(), value);
   }
 
+  override has(key: string): boolean {
+    return super.has(key.toUpperCase());
+  }
+
   override get(key: string): V | undefined {
     return super.get(key.toUpperCase());
   }
