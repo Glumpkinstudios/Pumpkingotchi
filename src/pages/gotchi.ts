@@ -23,7 +23,7 @@ const game = new Engine({
   scenes: {
     main: new MainScene({
       channel: options.channel,
-      blackList: options.blackList?.split(','),
+      blacklist: options.blacklist?.split(', '),
       transparent: !!options.transparent,
     }),
   },

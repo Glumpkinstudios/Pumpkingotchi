@@ -9,20 +9,18 @@ export class MainScene extends Scene {
   rand = new Random();
 
   chatHandler: ChatHandler;
-  blackList: string[];
+  blacklist: string[];
 
   constructor(
     private options: {
       channel?: string | null;
-      blackList?: string[] | null;
+      blacklist?: string[] | null;
       transparent?: boolean;
     }
   ) {
     super();
     this.chatHandler = new ChatHandler(options.channel ?? 'ItsMerume');
-    this.blackList = ['StreamElements', ...(options.blackList ?? [])].map(
-      (el) => el.toUpperCase()
-    );
+    this.blacklist = (options.blacklist ?? []).map((el) => el.toUpperCase());
   }
 
   override onInitialize(engine: Engine): void {
@@ -64,7 +62,7 @@ export class MainScene extends Scene {
     // TODO: remove chatters as they go offline
     // TODO: limit the amount of chatters
     this.chatHandler.addListener((user, bangMessage, emotesUrls) => {
-      if (this.blackList.includes(user.toUpperCase())) {
+      if (this.blacklist.includes(user.toUpperCase())) {
         return;
       }
 

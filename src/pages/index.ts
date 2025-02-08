@@ -11,23 +11,32 @@ const copyButton = document.getElementById('copy-button') as HTMLButtonElement;
 let url = '';
 function onFormChange() {
   const formData = new FormData(form);
-  const sizeFormData = formData.get('size')?.toString();
+  const formDataSize = formData.get('size')?.toString();
 
   customSizeContainer.style.display =
-    sizeFormData === 'custom' ? 'block' : 'none';
+    formDataSize === 'custom' ? 'block' : 'none';
 
   const size =
-    sizeFormData === 'custom'
+    formDataSize === 'custom'
       ? `${formData.get('custom-size-width')}x${formData.get('custom-size-height')}`
-      : sizeFormData;
+      : formDataSize;
 
   const urlParamsObj: Record<string, string> = Object.fromEntries(
     Object.entries({
       channel: formData.get('sname')?.toString(),
       size: size?.toString(),
       transparent: formData.has('transparent') ? 'true' : undefined,
+      blacklist: formData
+        .get('blacklist')
+        ?.toString()
+        .split('\n')
+        ?.map((line) => line.trim())
+        ?.filter((line) => line.length > 0)
+        ?.join(', '),
     }).filter((entry) => entry[1] !== undefined) as [string, string][]
   );
+
+  console.log(formData.get('blacklist'));
 
   url = `${window.location.href}gotchi?${new URLSearchParams(urlParamsObj).toString()}`;
 
