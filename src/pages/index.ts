@@ -36,8 +36,6 @@ function onFormChange() {
     }).filter((entry) => entry[1] !== undefined) as [string, string][]
   );
 
-  console.log(formData.get('blacklist'));
-
   url = `${window.location.href}gotchi?${new URLSearchParams(urlParamsObj).toString()}`;
 
   urlInput.value = url;
@@ -50,10 +48,7 @@ form.onchange = () => {
 
 form.onsubmit = (ev: SubmitEvent) => {
   ev.preventDefault();
-  const formData = new FormData(form);
-  for (const [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
+  window.open(urlInput.value, '_blank');
 };
 
 copyButton.onclick = () => {
@@ -61,8 +56,4 @@ copyButton.onclick = () => {
   urlInput.setSelectionRange(0, 99999);
 
   navigator.clipboard.writeText(urlInput.value);
-};
-
-navigateButton.onclick = () => {
-  window.open(urlInput.value, '_blank');
 };
