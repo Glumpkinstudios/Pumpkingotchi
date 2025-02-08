@@ -1,8 +1,8 @@
 {
   "license": "UNLICENSED",
   "scripts": {
-    "start": "parcel src/*.html --no-autoinstall --lazy",
-    "build": "rimraf dist && parcel build src/*.html --public-url ./",
+    "start": "parcel src/pages/*.html --no-autoinstall --no-cache",
+    "build": "rimraf dist && parcel build src/pages/*.html --public-url ./",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint src/**/*.ts --fix",
@@ -18,14 +18,17 @@
     "@eslint/js": "^9.19.0",
     "@parcel/config-default": "^2.13.3",
     "@parcel/transformer-raw": "^2.13.3",
+    "@tailwindcss/postcss": "^4.0.4",
     "@types/node": "^22.13.1",
     "@types/tmi.js": "^1.8.6",
     "eslint": "^9.19.0",
     "gh-pages": "^6.3.0",
     "globals": "^15.14.0",
     "parcel": "^2.13.3",
+    "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
+    "tailwindcss": "^4.0.4",
     "typescript-eslint": "^8.23.0"
   }
 }

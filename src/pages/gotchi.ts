@@ -1,6 +1,6 @@
 import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
-import { MainScene } from './game/scene';
-import { loader } from './game/resources';
+import { MainScene } from '@/game/scene';
+import { loader } from '@/game/resources';
 
 const options: Record<string, string | undefined> = Object.fromEntries(
   new URLSearchParams(window.location.search)

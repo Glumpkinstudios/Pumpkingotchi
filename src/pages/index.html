@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="index.ts"></script>
+    <style>
+      @import './index.css';
+    </style>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div>
+      <form id="form" class="max-w-sm mx-auto bg-[#111827] mt-8 rounded p-8">
+        <img
+          src="../assets/running_pumpkin_32.png"
+          alt="Pumpkin"
+          class="w-28 h-28 mx-auto mb-6"
+        />
+
+        <!-- Field with the generated URL -->
+        <div class="mb-5 flex flex-col space-y-2">
+          <label
+            for="url"
+            class="text-sm font-medium text-gray-900 dark:text-white"
+            >Generated URL</label
+          >
+
+          <div class="flex items-center space-x-2 w-full">
+            <!-- URL Input -->
+            <input
+              type="text"
+              id="url"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+              disabled
+            />
+
+            <!-- Copy Button with Font Awesome -->
+            <button
+              id="copy-button"
+              type="button"
+              class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 min-w-10"
+            >
+              <i class="fas fa-copy w-full text-center"></i>
+            </button>
+
+            <!-- Navigate Button with Font Awesome -->
+            <button
+              type="submit"
+              id="navigate-button"
+              class="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 min-w-10"
+            >
+              <i class="fas fa-arrow-right w-full text-center"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label
+            for="sname"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Channel</label
+          >
+          <input
+            type="text"
+            id="sname"
+            name="sname"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value="Glowypumpkin"
+            required
+          />
+        </div>
+
+        <div class="mb-5">
+          <label
+            for="size"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Size</label
+          >
+          <!-- Select for sizes -->
+          <select
+            id="size"
+            name="size"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="detect">
+              Detect (fill the browser, good fror OBS)
+            </option>
+            <option value="custom">Custom</option>
+            <option value="256x256">256x256</option>
+            <option value="512x512" selected>512x512</option>
+            <option value="1024x1024">1024x1024</option>
+            <option value="2048x2048">2048x2048</option>
+          </select>
+        </div>
+
+        <!-- Custom size input with two number input fields -->
+        <div id="custom-size-container" class="mb-5 hidden">
+          <label
+            for="custom-size"
+            class="font-medium text-sm text-gray-900 dark:text-gray-300"
+          >
+            Custom size
+          </label>
+
+          <div class="flex gap-2">
+            <input
+              id="custom-size-width"
+              type="number"
+              name="custom-size-width"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Width"
+            />
+
+            <input
+              id="custom-size-height"
+              type="number"
+              name="custom-size-height"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Height"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-start mb-5">
+          <div class="flex items-center h-5">
+            <input
+              id="transparent"
+              name="transparent"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+            />
+          </div>
+          <label
+            for="transparent"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Transparent Background</label
+          >
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
