@@ -29,7 +29,7 @@ function onFormChange() {
     }).filter((entry) => entry[1] !== undefined) as [string, string][]
   );
 
-  url = `${window.location.origin}/gotchi?${new URLSearchParams(urlParamsObj).toString()}`;
+  url = `${window.location.href}gotchi?${new URLSearchParams(urlParamsObj).toString()}`;
 
   urlInput.value = url;
 }
