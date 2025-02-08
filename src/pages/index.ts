@@ -11,14 +11,20 @@ const copyButton = document.getElementById('copy-button') as HTMLButtonElement;
 let url = '';
 function onFormChange() {
   const formData = new FormData(form);
+  const sizeFormData = formData.get('size')?.toString();
 
   customSizeContainer.style.display =
-    formData.get('size') === 'custom' ? 'block' : 'none';
+    sizeFormData === 'custom' ? 'block' : 'none';
+
+  const size =
+    sizeFormData === 'custom'
+      ? `${formData.get('custom-size-width')}x${formData.get('custom-size-height')}`
+      : sizeFormData;
 
   const urlParamsObj: Record<string, string> = Object.fromEntries(
     Object.entries({
       channel: formData.get('sname')?.toString(),
-      size: formData.get('size')?.toString(),
+      size: size?.toString(),
       transparent: formData.has('transparent') ? 'true' : undefined,
     }).filter((entry) => entry[1] !== undefined) as [string, string][]
   );

@@ -6,9 +6,18 @@ const options: Record<string, string | undefined> = Object.fromEntries(
   new URLSearchParams(window.location.search)
 );
 
+const size = options.size?.includes('x')
+  ? {
+      width: Number.parseInt(options.size.split('x')[0]),
+      height: Number.parseInt(options.size.split('x')[1]),
+    }
+  : options.size === 'detect'
+    ? { width: window.innerWidth, height: window.innerHeight }
+    : { width: 512, height: 512 };
+
 const game = new Engine({
-  width: options.width !== undefined ? Number.parseInt(options.width) : 512,
-  height: options.height !== undefined ? Number.parseInt(options.height) : 512,
+  width: size.width,
+  height: size.height,
   displayMode: DisplayMode.Fixed,
   pixelArt: true,
   scenes: {

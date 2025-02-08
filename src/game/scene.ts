@@ -1,11 +1,10 @@
-import { Actor, Color, Random, Scene, Vector } from 'excalibur';
+import { Actor, Color, Engine, Random, Scene, Vector } from 'excalibur';
 import { Resources } from './resources';
 import PumpkinActor from './pumpkin';
 import ChatHandler from '../utils/chat-handler';
 import EmoteActor from './emote-actor';
 
 export class MainScene extends Scene {
-  backgroundColor = Color.Transparent;
   activeChatters = new Map<string, PumpkinActor>();
   rand = new Random();
 
@@ -26,7 +25,7 @@ export class MainScene extends Scene {
     );
   }
 
-  onInitialize(): void {
+  override onInitialize(engine: Engine): void {
     if (!this.options.transparent) {
       const background = new Actor();
       background.graphics.use(Resources.backgroundTexture.toSprite());
@@ -35,6 +34,9 @@ export class MainScene extends Scene {
       background.scale = new Vector(2, 2);
       this.add(background);
     }
+    this.backgroundColor = this.options.transparent
+      ? Color.Transparent
+      : Color.fromHex('84c669');
 
     if (process.env.DEBUG) {
       for (let i = 0; i < 10; i++) {
@@ -42,11 +44,11 @@ export class MainScene extends Scene {
           pos: new Vector(
             this.rand.floating(
               PumpkinActor.radius * 2,
-              512 - PumpkinActor.radius * 2
+              engine.drawWidth - PumpkinActor.radius * 2
             ),
             this.rand.floating(
               PumpkinActor.radius * 2,
-              512 - PumpkinActor.radius * 2
+              engine.drawHeight - PumpkinActor.radius * 2
             )
           ),
           chatterName: `Chatter ${i}`,
@@ -72,11 +74,11 @@ export class MainScene extends Scene {
           pos: new Vector(
             this.rand.floating(
               PumpkinActor.radius * 2,
-              512 - PumpkinActor.radius * 2
+              engine.drawWidth - PumpkinActor.radius * 2
             ),
             this.rand.floating(
               PumpkinActor.radius * 2,
-              512 - PumpkinActor.radius * 2
+              engine.drawHeight - PumpkinActor.radius * 2
             )
           ),
           chatterName: user,
