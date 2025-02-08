@@ -11,7 +11,7 @@
     />
   </head>
 
-  <body>
+  <body class="text-gray-300">
     <div>
       <form id="form" class="max-w-sm mx-auto bg-[#111827] mt-8 rounded p-8">
         <img
@@ -22,9 +22,7 @@
 
         <!-- Field with the generated URL -->
         <div class="mb-5 flex flex-col space-y-2">
-          <label
-            for="url"
-            class="text-sm font-medium text-gray-900 dark:text-white"
+          <label for="url" class="text-sm font-medium text-white"
             >Generated URL</label
           >
 
@@ -33,7 +31,7 @@
             <input
               type="text"
               id="url"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               required
               disabled
             />
@@ -59,32 +57,28 @@
         </div>
 
         <div class="mb-5">
-          <label
-            for="sname"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          <label for="sname" class="block mb-2 text-sm font-medium text-white"
             >Channel</label
           >
           <input
             type="text"
             id="sname"
             name="sname"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             value="Glowypumpkin"
             required
           />
         </div>
 
         <div class="mb-5">
-          <label
-            for="size"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          <label for="size" class="block mb-2 text-sm font-medium text-white"
             >Size</label
           >
           <!-- Select for sizes -->
           <select
             id="size"
             name="size"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="detect">
               Detect (fill the browser, good fror OBS)
@@ -99,10 +93,7 @@
 
         <!-- Custom size input with two number input fields -->
         <div id="custom-size-container" class="mb-5 hidden">
-          <label
-            for="custom-size"
-            class="font-medium text-sm text-gray-900 dark:text-gray-300"
-          >
+          <label for="custom-size" class="font-medium text-sm text-gray-300">
             Custom size
           </label>
 
@@ -111,7 +102,7 @@
               id="custom-size-width"
               type="number"
               name="custom-size-width"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               placeholder="Width"
             />
 
@@ -119,7 +110,7 @@
               id="custom-size-height"
               type="number"
               name="custom-size-height"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               placeholder="Height"
             />
           </div>
@@ -132,12 +123,12 @@
               name="transparent"
               type="checkbox"
               value=""
-              class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+              class="w-4 h-4 border rounded-sm focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800"
             />
           </div>
           <label
             for="transparent"
-            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            class="ms-2 text-sm font-medium text-gray-300"
             >Transparent Background (eg. for OBS)</label
           >
         </div>
@@ -146,19 +137,36 @@
         <div class="mb-5">
           <label
             for="blacklist"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-white"
             >Blacklist</label
           >
           <textarea
             id="blacklist"
             name="blacklist"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             rows="4"
           >
 StreamElements</textarea
           >
         </div>
       </form>
+
+      <!-- Footer wit a link to GitHub -->
+      <div class="text-center text-sm text-gray-600">
+        Made with 💙 by
+        <a href="https://x.com/ItsMerume" target="_blank" class="text-blue-900"
+          >Merume</a
+        >.
+        <br />
+        Please check out the
+        <a
+          href="https://github.com/Glumpkinstudios/pumpkingotchi"
+          target="_blank"
+          class="text-blue-900"
+          >GitHub</a
+        >
+        for more information.
+      </div>
     </div>
   </body>
 </html>
