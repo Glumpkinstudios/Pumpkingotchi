@@ -3,10 +3,19 @@ const customSizeContainer = document.getElementById(
   'custom-size-container'
 ) as HTMLDivElement;
 const urlInput = document.getElementById('url') as HTMLInputElement;
-const navigateButton = document.getElementById(
-  'navigate-button'
-) as HTMLButtonElement;
 const copyButton = document.getElementById('copy-button') as HTMLButtonElement;
+const useRewardRedeem = document.getElementById(
+  'use-roll-reward'
+) as HTMLInputElement;
+const rewardRedeemContainer = document.getElementById(
+  'roll-reward-container'
+) as HTMLDivElement;
+const useBangCommand = document.getElementById(
+  'use-roll-command'
+) as HTMLInputElement;
+const bangCommandContainer = document.getElementById(
+  'roll-command-container'
+) as HTMLDivElement;
 
 let url = '';
 function onFormChange() {
@@ -16,10 +25,25 @@ function onFormChange() {
   customSizeContainer.style.display =
     formDataSize === 'custom' ? 'block' : 'none';
 
+  rewardRedeemContainer.style.display = useRewardRedeem.checked
+    ? 'block'
+    : 'none';
+  bangCommandContainer.style.display = useBangCommand.checked
+    ? 'block'
+    : 'none';
+
   const size =
     formDataSize === 'custom'
       ? `${formData.get('custom-size-width')}x${formData.get('custom-size-height')}`
       : formDataSize;
+
+  const rollRewardTitle = useRewardRedeem.checked
+    ? formData.get('roll-reward-title')?.toString() || 'Gotchi Gatcha'
+    : undefined;
+
+  const rollCommand = useBangCommand.checked
+    ? formData.get('roll-command')?.toString() || '!gotchi roll'
+    : undefined;
 
   const urlParamsObj: Record<string, string> = Object.fromEntries(
     Object.entries({
@@ -33,6 +57,8 @@ function onFormChange() {
         ?.map((line) => line.trim())
         ?.filter((line) => line.length > 0)
         ?.join(', '),
+      rollRewardTitle,
+      rollCommand,
     }).filter((entry) => entry[1] !== undefined) as [string, string][]
   );
 

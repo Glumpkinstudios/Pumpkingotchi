@@ -25,6 +25,8 @@ const game = new Engine({
       channel: options.channel,
       blacklist: options.blacklist?.split(', '),
       transparent: !!options.transparent,
+      rollCommand: options.rollCommand,
+      rollRewardTitle: options.rollRewardTitle,
     }),
   },
   maxFps: options.fps !== undefined ? Number.parseInt(options.fps) : 48,

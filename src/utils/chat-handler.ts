@@ -8,8 +8,11 @@ type ChatHandlerListener = (
   emotesUrls: string[]
 ) => void;
 
+type RewardListener = (user: string, rewardTitle: string) => void;
+
 export default class ChatHandler {
   private listeners: ChatHandlerListener[] = [];
+  private rewardListeners: RewardListener[] = [];
 
   private async init(channelNames: string[]) {
     ComfyJS.Init(
@@ -35,7 +38,7 @@ export default class ChatHandler {
       }
 
       this.listeners.forEach((listener) => {
-        listener(user, [command, message], []);
+        listener(user, [command, message.trim()], []);
       });
     };
 
@@ -56,6 +59,31 @@ export default class ChatHandler {
         listener(user, undefined, [...twitchEmoteUrls, ...externalEmoteUrls]);
       });
     };
+
+    // Add PubSub handler
+    const pubSubWs = new WebSocket(`wss://pubsub-edge.twitch.tv`);
+    const rewardTopic = `community-points-channel-v1.${roomId}`;
+    pubSubWs.onopen = () => {
+      pubSubWs.send('{"type": "PING"}');
+      pubSubWs.send(`{"data":{"topics":["${rewardTopic}"]},"type":"LISTEN"}`);
+    };
+
+    pubSubWs.onmessage = (message) => {
+      try {
+        const { data, type } = JSON.parse(message.data.toString());
+        if (type === 'MESSAGE' && data.topic === rewardTopic) {
+          const innerMessage = JSON.parse(data.message);
+          this.rewardListeners.forEach((listener) => {
+            listener(
+              innerMessage.data.redemption.user.display_name,
+              innerMessage.data.redemption.reward.title
+            );
+          });
+        }
+      } catch {
+        // ignore
+      }
+    };
   }
 
   constructor(
@@ -69,9 +97,7 @@ export default class ChatHandler {
     this.listeners.push(listener);
   }
 
-  public removeListener(listener: ChatHandlerListener) {
-    this.listeners = this.listeners.filter(
-      (listenerEl) => listenerEl !== listener
-    );
+  public addRewardListener(listener: RewardListener) {
+    this.rewardListeners.push(listener);
   }
 }

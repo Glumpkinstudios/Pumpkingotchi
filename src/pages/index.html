@@ -13,7 +13,7 @@
 
   <body class="text-gray-300">
     <div>
-      <form id="form" class="max-w-sm mx-auto bg-[#111827] mt-8 rounded p-8">
+      <form id="form" class="max-w-md mx-auto bg-[#111827] mt-8 rounded-md p-8">
         <img
           src="../assets/running_pumpkin_32.png"
           alt="Pumpkin"
@@ -116,6 +116,7 @@
           </div>
         </div>
 
+        <!-- Checkbox for transparent background -->
         <div class="flex items-start mb-5">
           <div class="flex items-center h-5">
             <input
@@ -131,6 +132,74 @@
             class="ms-2 text-sm font-medium text-gray-300"
             >Transparent Background (eg. for OBS)</label
           >
+        </div>
+
+        <!-- Checkbox for skin roll redeem -->
+        <div class="flex items-start mb-5">
+          <div class="flex items-center h-5">
+            <input
+              id="use-roll-reward"
+              name="use-roll-reward"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border rounded-sm focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800"
+            />
+          </div>
+          <label
+            for="use-roll-reward"
+            class="ms-2 text-sm font-medium text-gray-300"
+            >Use point redeem for rolling a skin</label
+          >
+        </div>
+
+        <!-- Input for skin roll reward title -->
+        <div id="roll-reward-container" class="mb-5">
+          <label
+            for="roll-reward-title"
+            class="block mb-2 text-sm font-medium text-white"
+            >Skin Roll Redeem Title</label
+          >
+          <input
+            type="text"
+            id="roll-reward-title"
+            name="roll-reward-title"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Gotchi Gatcha"
+          />
+        </div>
+
+        <!-- Checkbox for skin roll command -->
+        <div class="flex items-start mb-5">
+          <div class="flex items-center h-5">
+            <input
+              id="use-roll-command"
+              name="use-roll-command"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border rounded-sm focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800"
+            />
+          </div>
+          <label
+            for="use-roll-command"
+            class="ms-2 text-sm font-medium text-gray-300"
+            >Use bang command (starting with !) for rolling a skin</label
+          >
+        </div>
+
+        <!-- Input for skin roll bang command -->
+        <div id="roll-command-container" class="mb-5">
+          <label
+            for="roll-command"
+            class="block mb-2 text-sm font-medium text-white"
+            >Skin Roll Redeem Command (!)</label
+          >
+          <input
+            type="text"
+            id="roll-command"
+            name="roll-command"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            placeholder="!gotchi roll"
+          />
         </div>
 
         <!-- List of blacklisted users -->

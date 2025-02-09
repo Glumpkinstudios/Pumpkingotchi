@@ -3,9 +3,10 @@ import { Resources } from './resources';
 import PumpkinActor from './pumpkin';
 import ChatHandler from '../utils/chat-handler';
 import EmoteActor from './emote-actor';
+import { CaseInsensitiveMap } from '@/utils/generic';
 
 export class MainScene extends Scene {
-  activeChatters = new Map<string, PumpkinActor>();
+  activeChatters = new CaseInsensitiveMap<PumpkinActor>();
   rand = new Random();
 
   chatHandler: ChatHandler;
@@ -16,6 +17,8 @@ export class MainScene extends Scene {
       channel?: string | null;
       blacklist?: string[] | null;
       transparent?: boolean;
+      rollRewardTitle?: string;
+      rollCommand?: string;
     }
   ) {
     super();
@@ -66,7 +69,7 @@ export class MainScene extends Scene {
         return;
       }
 
-      let activeChatterOpt = this.activeChatters.get(user.toUpperCase());
+      let activeChatterOpt = this.activeChatters.get(user);
       if (!activeChatterOpt) {
         const pumpkin = new PumpkinActor({
           pos: new Vector(
@@ -82,12 +85,16 @@ export class MainScene extends Scene {
           chatterName: user,
         });
         this.add(pumpkin);
-        this.activeChatters.set(user.toUpperCase(), pumpkin);
+        this.activeChatters.set(user, pumpkin);
         activeChatterOpt = pumpkin;
       }
 
-      if (bangMessage) {
-        activeChatterOpt.sendBangMessage(bangMessage[0], bangMessage[1]);
+      if (
+        bangMessage &&
+        `!${bangMessage[0]} ${bangMessage[1] ?? ''}`.trim() ===
+          this.options.rollCommand
+      ) {
+        activeChatterOpt.rollSkin();
       }
 
       emotesUrls.slice(0, 5).forEach((emoteUrl) => {
@@ -95,6 +102,12 @@ export class MainScene extends Scene {
           new EmoteActor(activeChatterOpt.pos.clone(), emoteUrl, this.rand)
         );
       });
+    });
+
+    this.chatHandler.addRewardListener((user, rewardTitle) => {
+      if (rewardTitle === this.options.rollCommand) {
+        this.activeChatters.get(user)?.rollSkin();
+      }
     });
   }
 }

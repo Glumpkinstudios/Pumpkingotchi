@@ -82,11 +82,9 @@ export default class PumpkinActor extends Actor {
       new Circle({ radius: PumpkinActor.radius, color: Color.Orange });
   }
 
-  public sendBangMessage(bang: string, bangArgs: string | undefined) {
-    if (bang === 'gotchi' && bangArgs === 'roll') {
-      this.ininSkin(true);
-      this.setIdle();
-    }
+  public rollSkin() {
+    this.ininSkin(true);
+    this.setIdle();
   }
 
   override onInitialize(engine: Engine): void {
