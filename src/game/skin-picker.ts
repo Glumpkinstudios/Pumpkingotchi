@@ -40,6 +40,10 @@ export default function getPumpkinSkin(
       res: Resources.pumpkinSystem32,
       weight: 0.1,
     },
+    {
+      res: Resources.orangesuit,
+      weight: 0.1,
+    },
   ];
 
   // hardcoded map of default skins for specific users
@@ -48,6 +52,7 @@ export default function getPumpkinSkin(
     ['Zerfaru', Resources.pumpkinZerfaru],
     ['ItsSystem32', Resources.pumpkinSystem32],
     ['The_Mazor', Resources.pumpkinCook],
+    ['Orangesuit1', Resources.orangesuit],
   ]);
 
   const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;

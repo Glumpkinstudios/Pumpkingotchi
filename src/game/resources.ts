@@ -13,6 +13,7 @@ import pumpkinZerfaruSkinSrc from '../assets/skins/running_pumpkin_zerfaru_32.as
 import pumpkinCatSkinSrc from '../assets/skins/running_pumpkin_cat_32.aseprite';
 import pumpkinDaisySkinSrc from '../assets/skins/running_pumpkin_daisy_32.aseprite';
 import pumpkinPiphatSkinSrc from '../assets/skins/running_pumpkin_piphat_32.aseprite';
+import orangesuitSkinSrc from '../assets/skins/running_orangesuit.aseprite';
 
 export const Resources = {
   backgroundTexture: new ImageSource(backgroundTextureSrc),
@@ -26,6 +27,7 @@ export const Resources = {
   pumpkinCat: new AsepriteResource(pumpkinCatSkinSrc),
   pumpkinDaisy: new AsepriteResource(pumpkinDaisySkinSrc),
   pumpkinPiphat: new AsepriteResource(pumpkinPiphatSkinSrc),
+  orangesuit: new AsepriteResource(orangesuitSkinSrc),
 } as const satisfies Record<string, Loadable<unknown>>;
 
 export const loader = new CustomLoader(Object.values(Resources));

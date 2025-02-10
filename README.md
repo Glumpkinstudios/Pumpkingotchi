@@ -42,3 +42,9 @@ This project is heavily inspired by [GlowyPumpkin's](https://www.twitch.tv/glowy
 Special thanks to GlowyPumpkin for bringing so much joy through her streams and inspiring this project.
 
 This project uses some art from [Kenny.nl](https://kenny.nl/) (described in [ASSETS.md](./src/assets/ASSETS.md)).
+
+## Skins
+
+Some skins are made by the members of community.
+
+[Orange suit](./src/assets/skins/running_orangesuit.aseprite) by Orangesuit1.
