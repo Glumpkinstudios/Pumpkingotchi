@@ -14,6 +14,8 @@ import {
   Vector,
 } from 'excalibur';
 import getPumpkinSkin from './skin-picker';
+import { CaseInsensitiveMap } from '@/utils/generic';
+import { AsepriteResource } from '@excaliburjs/plugin-aseprite';
 
 const rand = new Random();
 
@@ -23,6 +25,7 @@ function randBetween(min: number, max: number) {
 
 export default class PumpkinActor extends Actor {
   static radius = 16;
+  static userSkinMemory = new CaseInsensitiveMap<AsepriteResource>();
 
   private minWalkRadius = 15;
   private maxWalkRadius = 50;
@@ -30,6 +33,8 @@ export default class PumpkinActor extends Actor {
 
   private minIdleTime = 1000;
   private maxIdleTime = 10000;
+
+  public timeout = 1000;
 
   state:
     | {
@@ -40,6 +45,9 @@ export default class PumpkinActor extends Actor {
     | {
         type: 'idle';
         for: number;
+      }
+    | {
+        type: 'scheduled-to-die';
       } = {
     type: 'idle',
     for: 0,
@@ -70,8 +78,13 @@ export default class PumpkinActor extends Actor {
     this.ininSkin();
   }
 
-  private ininSkin(skipDefaultSkin = false) {
-    const skin = getPumpkinSkin(this.chatterName, rand, skipDefaultSkin);
+  private ininSkin(reroll = false) {
+    const skin =
+      !reroll && PumpkinActor.userSkinMemory.has(this.chatterName)
+        ? PumpkinActor.userSkinMemory.get(this.chatterName)!
+        : getPumpkinSkin(this.chatterName, rand, reroll);
+
+    PumpkinActor.userSkinMemory.set(this.chatterName, skin);
 
     this.idleAnimation =
       skin.getAnimation('idle') ??
@@ -116,6 +129,11 @@ export default class PumpkinActor extends Actor {
     this.addChild(label);
   }
 
+  onCustomAdd(): void {
+    this.graphics.opacity = 0;
+    this.actions.fade(1, 500);
+  }
+
   private setIdle() {
     this.state = {
       type: 'idle',
@@ -136,10 +154,13 @@ export default class PumpkinActor extends Actor {
     };
   }
 
-  private handleIdle(engine: Engine, elapsed: number) {
+  private handleIdle(
+    state: Extract<typeof this.state, { type: 'idle' }>,
+    elapsed: number
+  ) {
     // wait in place until the timeout passes
-    if (this.state.for && this.state.for > 0) {
-      this.state.for -= elapsed;
+    if (state.for > 0) {
+      state.for -= elapsed;
       return;
     }
 
@@ -164,7 +185,7 @@ export default class PumpkinActor extends Actor {
       return;
     }
 
-    this.state.for -= elapsed;
+    state.for -= elapsed;
 
     const elapsedTimesSpeed = this.walkSpeed * elapsed;
 
@@ -210,13 +231,23 @@ export default class PumpkinActor extends Actor {
 
     switch (this.state.type) {
       case 'idle':
-        this.handleIdle(engine, elapsed);
+        this.handleIdle(this.state, elapsed);
         break;
       case 'walk':
         this.handleWalk(this.state, engine, elapsed);
         break;
+      case 'scheduled-to-die':
+        break;
       default:
         throw new Error('Invalid state');
+    }
+
+    this.timeout -= elapsed;
+    if (this.timeout <= 0 && this.state.type !== 'scheduled-to-die') {
+      this.actions
+        .fade(0, 500)
+        .die()
+        .callMethod(() => this.kill());
     }
   }
 }

@@ -12,6 +12,8 @@ export class MainScene extends Scene {
   chatHandler: ChatHandler;
   blacklist: string[];
 
+  initialEngineMaxFps: number | undefined;
+
   constructor(
     private options: {
       channel?: string | null;
@@ -27,6 +29,8 @@ export class MainScene extends Scene {
   }
 
   override onInitialize(engine: Engine): void {
+    this.initialEngineMaxFps = engine.maxFps;
+
     if (!this.options.transparent) {
       const background = new Actor();
       background.graphics.use(Resources.backgroundTexture.toSprite());
@@ -35,6 +39,7 @@ export class MainScene extends Scene {
       background.scale = new Vector(2, 2);
       this.add(background);
     }
+
     this.backgroundColor = this.options.transparent
       ? Color.Transparent
       : Color.fromHex('84c669');
@@ -69,9 +74,9 @@ export class MainScene extends Scene {
         return;
       }
 
-      let activeChatterOpt = this.activeChatters.get(user);
-      if (!activeChatterOpt) {
-        const pumpkin = new PumpkinActor({
+      const activeChatter = this.activeChatters.getOrAdd(
+        user,
+        new PumpkinActor({
           pos: new Vector(
             this.rand.floating(
               PumpkinActor.radius * 2,
@@ -83,23 +88,28 @@ export class MainScene extends Scene {
             )
           ),
           chatterName: user,
-        });
-        this.add(pumpkin);
-        this.activeChatters.set(user, pumpkin);
-        activeChatterOpt = pumpkin;
+        })
+      );
+
+      if (!this.contains(activeChatter)) {
+        this.add(activeChatter);
+        activeChatter.onCustomAdd();
       }
+
+      // reset the timeout to ten minutes each time chatter types
+      activeChatter.timeout = 10 * 60 * 1000;
 
       if (
         bangMessage &&
         `!${bangMessage[0]} ${bangMessage[1] ?? ''}`.trim() ===
           this.options.rollCommand
       ) {
-        activeChatterOpt.rollSkin();
+        activeChatter.rollSkin();
       }
 
       emotesUrls.slice(0, 5).forEach((emoteUrl) => {
         this.add(
-          new EmoteActor(activeChatterOpt.pos.clone(), emoteUrl, this.rand)
+          new EmoteActor(activeChatter.pos.clone(), emoteUrl, this.rand)
         );
       });
     });
@@ -109,5 +119,16 @@ export class MainScene extends Scene {
         this.activeChatters.get(user)?.rollSkin();
       }
     });
+  }
+
+  override onPostUpdate(engine: Engine, elapsed: number): void {
+    super.onPostUpdate(engine, elapsed);
+
+    // decrease the FPS if there are no active chatters for performance reasons
+    if (this.activeChatters.size === 0) {
+      engine.maxFps = 1;
+    } else {
+      engine.maxFps = this.initialEngineMaxFps ?? 48;
+    }
   }
 }

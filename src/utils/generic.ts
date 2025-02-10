@@ -14,4 +14,14 @@ export class CaseInsensitiveMap<V> extends Map<string, V> {
   override get(key: string): V | undefined {
     return super.get(key.toUpperCase());
   }
+
+  getOrAdd(key: string, value: V): V {
+    const oldValue = this.get(key);
+    if (oldValue !== undefined) {
+      return oldValue;
+    }
+
+    this.set(key, value);
+    return value;
+  }
 }
