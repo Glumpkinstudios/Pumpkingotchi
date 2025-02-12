@@ -25,6 +25,18 @@ export default function getPumpkinSkin(
       res: Resources.pumpkinPiphat,
     },
     {
+      res: Resources.watermelon,
+      weight: 0.5,
+    },
+    {
+      res: Resources.pumpkinFire,
+      weight: 0.05,
+    },
+    {
+      res: Resources.pumpkinMaid,
+      weight: 0.2,
+    },
+    {
       res: Resources.pumpkinCook,
       weight: 0.2,
     },
@@ -53,6 +65,7 @@ export default function getPumpkinSkin(
     ['ItsSystem32', Resources.pumpkinSystem32],
     ['The_Mazor', Resources.pumpkinCook],
     ['Orangesuit1', Resources.orangesuit],
+    ['angrid69', Resources.pumpkinFire],
   ]);
 
   const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;
