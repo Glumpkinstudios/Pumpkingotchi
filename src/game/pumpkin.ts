@@ -14,8 +14,6 @@ import {
   Vector,
 } from 'excalibur';
 import getPumpkinSkin from './skin-picker';
-import { CaseInsensitiveMap } from '@/utils/generic';
-import { AsepriteResource } from '@excaliburjs/plugin-aseprite';
 
 const rand = new Random();
 
@@ -25,7 +23,6 @@ function randBetween(min: number, max: number) {
 
 export default class PumpkinActor extends Actor {
   static radius = 16;
-  static userSkinMemory = new CaseInsensitiveMap<AsepriteResource>();
 
   private minWalkRadius = 15;
   private maxWalkRadius = 50;
@@ -79,12 +76,7 @@ export default class PumpkinActor extends Actor {
   }
 
   private ininSkin(reroll = false) {
-    const skin =
-      !reroll && PumpkinActor.userSkinMemory.has(this.chatterName)
-        ? PumpkinActor.userSkinMemory.get(this.chatterName)!
-        : getPumpkinSkin(this.chatterName, rand, reroll);
-
-    PumpkinActor.userSkinMemory.set(this.chatterName, skin);
+    const skin = getPumpkinSkin(this.chatterName, rand, reroll, true);
 
     this.idleAnimation =
       skin.getAnimation('idle') ??

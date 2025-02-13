@@ -1,12 +1,52 @@
 import { Random } from 'excalibur';
 import { Resources } from './resources';
 import { CaseInsensitiveMap } from '../utils/generic';
+import { AsepriteResource } from '@excaliburjs/plugin-aseprite';
+
+function getPersistedSkins() {
+  const pumpkinSkin = localStorage.getItem('pumpkingotchi-user-skins');
+  const userSkins =
+    pumpkinSkin &&
+    (JSON.parse(pumpkinSkin) as Record<string, string | undefined>);
+
+  return userSkins || {};
+}
+
+function persistUserSkin(username: string, skin: string | undefined) {
+  try {
+    if (!skin) {
+      throw new Error('Skin is undefined');
+    }
+    const userSkins = getPersistedSkins();
+    userSkins[username] = skin;
+    localStorage.setItem('pumpkingotchi-user-skins', JSON.stringify(userSkins));
+  } catch (err) {
+    console.error(`Failed to persist skin for user ${username}`, err);
+  }
+}
 
 export default function getPumpkinSkin(
   username: string,
   rand = new Random(),
-  skipDefaultSkin = false
+  skipDefaultSkin = false,
+  persist = false
 ) {
+  // check the local storage first if the persistence is enabled
+  if (!skipDefaultSkin && persist) {
+    try {
+      const userSkins = getPersistedSkins();
+      const userSkin = userSkins[username];
+      const resource =
+        userSkin && Resources[userSkin as keyof typeof Resources];
+
+      if (resource && resource instanceof AsepriteResource) {
+        return resource;
+      }
+    } catch (err) {
+      console.error(`Failed to load persisted skin for user ${username}`, err);
+    }
+  }
+
   const skinChance = 0.2;
   const skinWeights = [
     {
@@ -66,6 +106,7 @@ export default function getPumpkinSkin(
     ['The_Mazor', Resources.pumpkinCook],
     ['Orangesuit1', Resources.orangesuit],
     ['angrid69', Resources.pumpkinFire],
+    ['GlowyPumpkin', Resources.pumpkinNerd],
   ]);
 
   const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;
@@ -87,6 +128,14 @@ export default function getPumpkinSkin(
   for (const skin of skinWeights) {
     randPick -= skin.weight ?? 1;
     if (randPick <= 0) {
+      // persist the skin after rolling
+      if (persist) {
+        persistUserSkin(
+          username,
+          Object.entries(Resources).find((entry) => entry[1] === skin.res)?.[0]
+        );
+      }
+
       return skin.res;
     }
   }
