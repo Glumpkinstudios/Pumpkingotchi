@@ -1,4 +1,4 @@
-import { ImageSource, Loadable } from 'excalibur';
+import { ImageSource, ImageWrapping, Loadable } from 'excalibur';
 import CustomLoader from './loader';
 import { AsepriteResource } from '@excaliburjs/plugin-aseprite';
 
@@ -19,7 +19,9 @@ import watermelonSkinSrc from '../assets/skins/running_watermelon_32.aseprite';
 import pumpkinFireSkinSrc from '../assets/skins/running_pumpkin_fire_32.aseprite';
 
 export const Resources = {
-  backgroundTexture: new ImageSource(backgroundTextureSrc),
+  backgroundTexture: new ImageSource(backgroundTextureSrc, {
+    wrapping: ImageWrapping.Repeat,
+  }),
   pumpkin: new AsepriteResource(pumpkinAsepriteSrc),
   pumpkinPemch: new AsepriteResource(pumpkinPemchSkinSrc),
   pumpkinBeard: new AsepriteResource(pumpkinBeardSkinSrc),

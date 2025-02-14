@@ -33,7 +33,17 @@ export class MainScene extends Scene {
 
     if (!this.options.transparent) {
       const background = new Actor();
-      background.graphics.use(Resources.backgroundTexture.toSprite());
+      background.graphics.use(
+        Resources.backgroundTexture.toSprite({
+          sourceView: {
+            x: 0,
+            y: 0,
+            width: engine.drawWidth,
+            height: engine.drawHeight,
+          },
+          destSize: { width: engine.drawWidth, height: engine.drawHeight },
+        })
+      );
       background.anchor = new Vector(0, 0);
       background.z = -1;
       background.scale = new Vector(2, 2);
