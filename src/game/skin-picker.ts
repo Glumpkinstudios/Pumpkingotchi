@@ -65,6 +65,9 @@ export default function getPumpkinSkin(
       res: Resources.pumpkinPiphat,
     },
     {
+      res: Resources.pumpkinWitch,
+    },
+    {
       res: Resources.watermelon,
       weight: 0.5,
     },
