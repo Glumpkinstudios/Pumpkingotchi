@@ -102,6 +102,10 @@ export default function getPumpkinSkin(
       res: Resources.orangesuit,
       weight: 0.1,
     },
+    {
+      res: Resources.pumpkinOrangeHat,
+      weight: 0.1,
+    },
   ];
 
   // hardcoded map of default skins for specific users
@@ -113,6 +117,7 @@ export default function getPumpkinSkin(
     ['Orangesuit1', Resources.orangesuit],
     ['angrid69', Resources.pumpkinFire],
     ['GlowyPumpkin', Resources.pumpkinNerd],
+    ['HatAndHoodie', Resources.pumpkinOrangeHat],
   ]);
 
   const defaultSkin = userSkins.get(username) ?? Resources.pumpkin;
